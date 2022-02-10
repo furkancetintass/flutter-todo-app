@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">564569001120-o6l4rm84c39feqfq4dh63ae1m2l5nt9k.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">564569001120</string>
+    <string name="google_api_key" translatable="false">AIzaSyCAHgbnmfydqszTeetjBTVkntn1xOInygQ</string>
+    <string name="google_app_id" translatable="false">1:564569001120:android:c3d93b438de8d7d6dccdc5</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCAHgbnmfydqszTeetjBTVkntn1xOInygQ</string>
+    <string name="google_storage_bucket" translatable="false">flutter-todo-app-0.appspot.com</string>
+    <string name="project_id" translatable="false">flutter-todo-app-0</string>
+</resources>

@@ -29,15 +29,26 @@ class Database {
   Future<bool> createTask(String userId, String? title, String content, String type) async {
     String taskId = databaseReference.child("tasks").child(userId).child(type).push().key;
     try {
-      databaseReference
+      await databaseReference
           .child("tasks")
           .child(userId)
           .child(type)
           .child(taskId)
-          .set({"title": title , "content": content});
+          .set({"title": title, "content": content, "taskId": taskId});
       return true;
     } catch (e) {
       debugPrint('create task fonk hata');
+      return false;
+    }
+  }
+
+  Future<bool> deleteTask(String type, String taskId,String userId) async {
+    try {
+      await databaseReference.child("tasks").child(userId).child(type).child(taskId).remove();
+
+      return true;
+    } catch (e) {
+      debugPrint('delete task fonk hata');
       return false;
     }
   }

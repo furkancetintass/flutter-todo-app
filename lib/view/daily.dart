@@ -1,11 +1,17 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flip_card/flip_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/core/interface/auth_interface.dart';
 import 'package:flutter_todo_app/core/model/task_model.dart';
+import 'package:flutter_todo_app/core/service/database_service.dart';
+import 'package:flutter_todo_app/core/utils/utils.dart';
 import 'package:flutter_todo_app/view/create_task.dart';
 import 'package:flutter_todo_app/view/widget/custom_appbar.dart';
 import 'package:flutter_todo_app/view/widget/task_card.dart';
 import 'package:provider/provider.dart';
+
+import '../locator.dart';
 
 class Daily extends StatelessWidget {
   const Daily({Key? key}) : super(key: key);
@@ -55,10 +61,36 @@ class Daily extends StatelessWidget {
                           mainAxisSpacing: 4,
                         ),
                         itemBuilder: (_, index) {
-                          return TaskCard(
-                            title: taskModel[index].title,
-                            content: taskModel[index].content,
-                          );
+                          return FlipCard(
+                              front: TaskCard(
+                                title: taskModel[index].title,
+                                content: taskModel[index].content,
+                              ),
+                              back: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: InkWell(
+                                      onTap: () {
+                                        if (taskModel[index].taskId == '') {
+                                          locator<Utils>()
+                                              .showErrorSnackBar(context, 'Bu task silinemez');
+                                        } else {
+                                          locator<Database>()
+                                              .deleteTask('daily', taskModel[index].taskId!,authService.userCredential.data!.user!.uid );
+                                        }
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: const [
+                                          Icon(CupertinoIcons.delete, color: Colors.white),
+                                          Text('Sil', style: TextStyle(color: Colors.white))
+                                        ],
+                                      ),
+                                    ),
+                                  )));
                         });
                   } else if (event.connectionState == ConnectionState.waiting) {
                     return const Center(
